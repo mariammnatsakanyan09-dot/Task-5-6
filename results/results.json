@@ -1,0 +1,123 @@
+{
+  "baseline_zero_test_rmse": 0.060491854406981314,
+  "reference_coefficients": {
+    "a": 25.19278241724258,
+    "b": 151927.05433538725,
+    "c": 412527.2547512825,
+    "g": 101709.1802850788
+  },
+  "kept": {
+    "name": "skip+mlp-2x64-silu-adam",
+    "config": {
+      "name": "skip+mlp-2x64-silu-adam",
+      "hidden": [
+        64,
+        64
+      ],
+      "activation": "silu",
+      "linear_skip": true,
+      "optimizer": "adam",
+      "lr": 0.003,
+      "lr_final": 0.0001,
+      "weight_decay": 0.0,
+      "warm_steps": 600,
+      "steps": 900,
+      "rollout_lengths": [
+        32,
+        96,
+        256
+      ],
+      "batch": 32,
+      "clip": 1.0,
+      "seed": 0
+    },
+    "free_run_rmse_train": 0.0016147806121356214,
+    "free_run_rmse_test": 0.004404090672331878
+  },
+  "all_runs": [
+    {
+      "config": {
+        "name": "mlp-2x32-tanh-adam",
+        "hidden": [
+          32,
+          32
+        ],
+        "activation": "tanh",
+        "linear_skip": false,
+        "optimizer": "adam",
+        "lr": 0.003,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0,
+        "warm_steps": 600,
+        "steps": 900,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 32,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.001698025893831759,
+      "test_rmse": 0.010898914211456383,
+      "seconds": 72.66196203231812
+    },
+    {
+      "config": {
+        "name": "skip+mlp-2x32-tanh-adam",
+        "hidden": [
+          32,
+          32
+        ],
+        "activation": "tanh",
+        "linear_skip": true,
+        "optimizer": "adam",
+        "lr": 0.003,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0,
+        "warm_steps": 600,
+        "steps": 900,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 32,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.001626998571468768,
+      "test_rmse": 0.008652300780694688,
+      "seconds": 82.9485239982605
+    },
+    {
+      "config": {
+        "name": "skip+mlp-2x64-silu-adam",
+        "hidden": [
+          64,
+          64
+        ],
+        "activation": "silu",
+        "linear_skip": true,
+        "optimizer": "adam",
+        "lr": 0.003,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0,
+        "warm_steps": 600,
+        "steps": 900,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 32,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.0016147806121356214,
+      "test_rmse": 0.004404090672331878,
+      "seconds": 89.3335611820221
+    }
+  ]
+}
