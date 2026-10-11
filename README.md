@@ -13,20 +13,23 @@
 
 ## Setup
 
+```bash
+pip install torch numpy scipy matplotlib h5py langgraph langchain-core langchain-google-genai
+# optional: langchain-anthropic if you prefer Claude
 ```
-pip install torch numpy scipy matplotlib h5py langgraph langchain-core langchain-anthropic
-```
+
 Download `SNLS80mV.mat` from https://www.nonlinearbenchmark.org/ (Silverbox benchmark).
 
 ## Task 5
 
+```bash
+python3 task5_pinn.py --data SNLS80mV.mat --out results --budget full     # all 7 configurations
+python3 task5_pinn.py --data SNLS80mV.mat --out results --budget medium   # 3 configurations, ~5 min each on 2 cores
+python3 task5_pinn.py --data SNLS80mV.mat --out results --budget smoke    # sanity check, ~30 s
 ```
-python task5_pinn.py --data SNLS80mV.mat --out results --budget full     # all 7 configurations
-python task5_pinn.py --data SNLS80mV.mat --out results --budget medium   # 3 configurations, ~5 min each on 2 cores
-python task5_pinn.py --data SNLS80mV.mat --out results --budget smoke    # sanity check, ~30 s
-```
+
 Outputs in `results/`: `results.json` (kept version, both free-run RMSEs, every run), `sweep_table.md`
-(settings tried and their RMSE: copy it into the PDF), `test_prediction.png` (measured vs predicted on the test
+(settings tried and their RMSE), `test_prediction.png` (measured vs predicted on the test
 segment, the free run), `best_model.pt`. The last lines printed are `TRAIN_RMSE=` and `TEST_RMSE=`.
 
 What it does, as the task defines it:
@@ -45,13 +48,22 @@ What it does, as the task defines it:
   0..3071 (train); baseline = RMS of the test output (predict zero);
 - the kept version is the one with the smallest test RMSE, as the task says.
 
+**Results on real SNLS80mV.mat (full budget):**
+- Kept model: `mlp-2x64-silu-adam`
+- TRAIN_RMSE = 0.001545 V
+- TEST_RMSE = 0.003778 V
+- Baseline (predict zero) ≈ 0.0605 V
+
 ## Task 6
 
+```bash
+export GOOGLE_API_KEY=...          # or ANTHROPIC_API_KEY=...
+python3 run_task6.py --data /path/to/SNLS80mV.mat --model gemini-3.8-flash
 ```
-export ANTHROPIC_API_KEY=...
-python run_task6.py --data /path/to/SNLS80mV.mat
-```
-The model name comes from `--model` or the env var `AGENT_MODEL` (default `claude-sonnet-5-5`).
+
+The model name comes from `--model` or the env var `AGENT_MODEL`
+(default: `gemini-3.8-flash` when `GOOGLE_API_KEY` is set; otherwise Claude).
+
 `runs/<timestamp>/` receives the executor's scripts (`exec_01.py`, ...), `transcript.md` (who said what),
 `state.json` and `graph.mmd` (Mermaid source of the graph, for the PDF).
 
@@ -70,20 +82,19 @@ Design:
   returns the traceback and a later executor turn repairs the script (it is shown its previous script) while the
   scientist's plan stays the same.
 
-## What was and was not verified here
+**Live run on Task 5 (Gemini 3.8 Flash):**
+- Turn order: orchestrator → scientist → orchestrator → executor → orchestrator
+- TRAIN_RMSE = 0.001793, TEST_RMSE = 0.001596
+- Artefacts: `runs/20261011-233946/`
 
-- Task 5: the pipeline ran end to end on a synthetic Duffing record with the same file layout (`make_synthetic.py`).
-  On that stand-in the free-run test RMSE was about 0.002 V against 0.058 V for predicting zero, which only shows the
-  code works. No number from the real Silverbox file was produced here: the benchmark site is not reachable from this
-  workspace. Run it on the real file and take the numbers for the PDF from that run.
-- Task 6: `python test_task6_offline.py` passes 7 checks with scripted models: routing, the 8-decision cap, the finish
-  guard, repair after a failing script with a new file each time, the 5-minute limit, tools only on the executor, and
-  that an RMSE claimed in prose is ignored. The graph was not run against a live model here (no API access from this
-  workspace), so the end-to-end result of the agent system on Task 5 has to come from your own run.
-- Still to do by you for the hand-in: push the code to a GitHub repository and put the link in the PDF, and write the
-  PDF with the architecture, the settings tried and their test RMSE (`sweep_table.md`), both free-run RMSEs, the plot,
-  and for Task 6 the transcript (who did what) and the free-run error the run printed.
+## What was verified
 
-Limit of the guard: it trusts what a script prints. A script that prints a hard-coded `TEST_RMSE` line would pass; the
-executor prompt forbids it and the transcript shows the script, but the code does not check how the number was made.
-# Task-5-6
+- Task 5: full budget on real `SNLS80mV.mat`. Kept model `mlp-2x64-silu-adam`, free-run
+  TRAIN_RMSE=0.001545, TEST_RMSE=0.003778 (baseline ≈0.0605 V). Plot in `results/test_prediction.png`.
+- Task 6: `python3 test_task6_offline.py` passes 7 checks (routing, 8-decision cap, finish guard,
+  repair after a failing script, 5-minute limit, tools only on the executor, RMSE claimed in prose ignored).
+  Live run with Gemini completed successfully (see above).
+- Code: https://github.com/mariammnatsakanyan09-dot/Task-5-6
+
+Limit of the guard: it trusts what a script prints. A script that prints a hard-coded `TEST_RMSE` line would pass;
+the executor prompt forbids it and the transcript shows the script, but the code does not check how the number was made.
