@@ -7,32 +7,32 @@
     "g": 101709.1802850788
   },
   "kept": {
-    "name": "skip+mlp-2x64-silu-adam",
+    "name": "mlp-2x64-silu-adam",
     "config": {
-      "name": "skip+mlp-2x64-silu-adam",
+      "name": "mlp-2x64-silu-adam",
       "hidden": [
         64,
         64
       ],
       "activation": "silu",
-      "linear_skip": true,
+      "linear_skip": false,
       "optimizer": "adam",
       "lr": 0.003,
       "lr_final": 0.0001,
       "weight_decay": 0.0,
-      "warm_steps": 600,
-      "steps": 900,
+      "warm_steps": 800,
+      "steps": 2400,
       "rollout_lengths": [
         32,
         96,
         256
       ],
-      "batch": 32,
+      "batch": 48,
       "clip": 1.0,
       "seed": 0
     },
-    "free_run_rmse_train": 0.0016147806121356214,
-    "free_run_rmse_test": 0.004404090672331878
+    "free_run_rmse_train": 0.0015445870627687555,
+    "free_run_rmse_test": 0.003778270356900993
   },
   "all_runs": [
     {
@@ -48,20 +48,105 @@
         "lr": 0.003,
         "lr_final": 0.0001,
         "weight_decay": 0.0,
-        "warm_steps": 600,
-        "steps": 900,
+        "warm_steps": 800,
+        "steps": 2400,
         "rollout_lengths": [
           32,
           96,
           256
         ],
-        "batch": 32,
+        "batch": 48,
         "clip": 1.0,
         "seed": 0
       },
-      "train_rmse": 0.001698025893831759,
-      "test_rmse": 0.010898914211456383,
-      "seconds": 72.66196203231812
+      "train_rmse": 0.0014940807387126551,
+      "test_rmse": 0.007046428731840604,
+      "seconds": 232.48285913467407
+    },
+    {
+      "config": {
+        "name": "mlp-2x64-tanh-adam",
+        "hidden": [
+          64,
+          64
+        ],
+        "activation": "tanh",
+        "linear_skip": false,
+        "optimizer": "adam",
+        "lr": 0.003,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0,
+        "warm_steps": 800,
+        "steps": 2400,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 48,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.0014675282265914837,
+      "test_rmse": 0.00629032875941369,
+      "seconds": 354.1628248691559
+    },
+    {
+      "config": {
+        "name": "mlp-3x64-tanh-adam",
+        "hidden": [
+          64,
+          64,
+          64
+        ],
+        "activation": "tanh",
+        "linear_skip": false,
+        "optimizer": "adam",
+        "lr": 0.003,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0,
+        "warm_steps": 800,
+        "steps": 2400,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 48,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.0015102871859493782,
+      "test_rmse": 0.009357415655415934,
+      "seconds": 462.81019711494446
+    },
+    {
+      "config": {
+        "name": "mlp-2x64-silu-adam",
+        "hidden": [
+          64,
+          64
+        ],
+        "activation": "silu",
+        "linear_skip": false,
+        "optimizer": "adam",
+        "lr": 0.003,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0,
+        "warm_steps": 800,
+        "steps": 2400,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 48,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.0015445870627687555,
+      "test_rmse": 0.003778270356900993,
+      "seconds": 325.3000807762146
     },
     {
       "config": {
@@ -76,48 +161,76 @@
         "lr": 0.003,
         "lr_final": 0.0001,
         "weight_decay": 0.0,
-        "warm_steps": 600,
-        "steps": 900,
+        "warm_steps": 800,
+        "steps": 2400,
         "rollout_lengths": [
           32,
           96,
           256
         ],
-        "batch": 32,
+        "batch": 48,
         "clip": 1.0,
         "seed": 0
       },
-      "train_rmse": 0.001626998571468768,
-      "test_rmse": 0.008652300780694688,
-      "seconds": 82.9485239982605
+      "train_rmse": 0.0014950124039412496,
+      "test_rmse": 0.005645527458787106,
+      "seconds": 907.1494410037994
     },
     {
       "config": {
-        "name": "skip+mlp-2x64-silu-adam",
+        "name": "skip+mlp-2x32-tanh-adamw-lr1e-3",
         "hidden": [
-          64,
-          64
+          32,
+          32
         ],
-        "activation": "silu",
+        "activation": "tanh",
+        "linear_skip": true,
+        "optimizer": "adamw",
+        "lr": 0.001,
+        "lr_final": 0.0001,
+        "weight_decay": 0.0001,
+        "warm_steps": 800,
+        "steps": 2400,
+        "rollout_lengths": [
+          32,
+          96,
+          256
+        ],
+        "batch": 48,
+        "clip": 1.0,
+        "seed": 0
+      },
+      "train_rmse": 0.001571668829923329,
+      "test_rmse": 0.007727548099525674,
+      "seconds": 264.6142420768738
+    },
+    {
+      "config": {
+        "name": "skip+mlp-2x32-tanh-adam-long",
+        "hidden": [
+          32,
+          32
+        ],
+        "activation": "tanh",
         "linear_skip": true,
         "optimizer": "adam",
         "lr": 0.003,
         "lr_final": 0.0001,
         "weight_decay": 0.0,
-        "warm_steps": 600,
-        "steps": 900,
+        "warm_steps": 800,
+        "steps": 3000,
         "rollout_lengths": [
-          32,
-          96,
-          256
+          64,
+          256,
+          512
         ],
-        "batch": 32,
+        "batch": 48,
         "clip": 1.0,
         "seed": 0
       },
-      "train_rmse": 0.0016147806121356214,
-      "test_rmse": 0.004404090672331878,
-      "seconds": 89.3335611820221
+      "train_rmse": 0.001473297798162349,
+      "test_rmse": 0.005238507987403675,
+      "seconds": 734.8145489692688
     }
   ]
 }
