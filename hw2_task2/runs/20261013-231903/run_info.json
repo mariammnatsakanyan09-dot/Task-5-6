@@ -1,0 +1,8 @@
+{
+ "model": "nvidia/nemotron-3-super-120b-a12b:free",
+ "provider": null,
+ "request": "Focus the beam.",
+ "max_decisions": 10,
+ "model_requests": 10,
+ "finished": "2026-10-13 23:20:05"
+}

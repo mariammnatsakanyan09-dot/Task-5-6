@@ -1,0 +1,5 @@
+experiment,macropixel_size,n_macropixels,focus_size,bg_gap,bg_width,n_bg_regions,iterations,n_flip,n_avg,enhancement,enhancement_initial,enhancement_vs_far_field,focus_gain,background_ratio,seconds,seed
+1,4,256,3,2,4,4,200,1,4,29.057,1.372,13.454,9.3,0.439,3.08,777065961
+2,8,64,3,2,4,4,200,1,4,22.001,1.494,12.587,5.09,0.346,3.08,1132586332
+3,16,16,3,2,4,4,200,1,4,6.409,0.689,5.062,5.02,0.539,3.09,99316955
+4,8,64,3,2,4,4,800,1,4,24.703,1.168,10.019,4.13,0.195,3.15,1248660779

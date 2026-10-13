@@ -1,0 +1,22 @@
+Homework 2, Task 2 - Focusing through a simulated bench (the statement, given to the system as background).
+
+We simulate a bench in which a laser beam goes through a DMD (a micromirror array that switches each pixel on or off, so it
+acts as an amplitude mask), then through a scattering medium, and is recorded by a camera:
+
+    laser -> DMD (amplitude only) -> scattering medium -> camera,      E_out = |T E_in|^2
+
+E_in is the amplitude pattern on the DMD and T the (fixed, unknown) complex transmission matrix of the medium. The camera
+adds noise, so a second shot of the same pattern is not a copy of the first.
+
+The goal of the user is to focus the beam: to make the light of the scattered beam land in a small spot of the camera, much
+brighter than the speckle around it. The method is wavefront shaping by iterative search:
+
+ 1. divide the DMD into macropixels and start from a random pattern;
+ 2. after each transmission read the intensity in the focus region and in the proximal background; split the background
+    into several regions and take the enhancement as the focus against that background;
+ 3. flip some macropixels, look at how the enhancement changed, keep or undo the flip, and repeat.
+
+The tool focus_search carries out this whole search for the settings it is given (macropixel size, size of the focus region,
+position and width of the background ring, number of background regions, number of iterations, number of macropixels flipped
+per trial, number of camera shots averaged) and returns the enhancement and the camera images. The system chooses all the
+settings itself; the user does not type any setting during the run.

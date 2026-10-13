@@ -1,0 +1,14 @@
+# agent system (OpenRouter goes through langchain-openai)
+langgraph>=1.0
+langchain-core
+langchain-openai
+pydantic>=2
+# only if you use another provider instead of OpenRouter
+# langchain-google-genai
+# langchain-anthropic
+# what the executor's scripts import (Task 5 model, CPU only)
+torch
+numpy
+scipy
+matplotlib
+h5py
