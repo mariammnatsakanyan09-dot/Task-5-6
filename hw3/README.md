@@ -57,7 +57,7 @@ switched the check off, while the coupling falls by the same number of dB as the
 heard (10 dB or more); the quietest good level is taken. The **Stop** button ends a run after the step it is doing now (one model request and
 its instrument calls); the number of model requests in the final line counts that run only.
 
-**Ask mode.** Type a request or choose a use case of Homework 3 (1-19): the same run as in the terminal, shown live on the page.
+**Ask mode.** Type a request or choose a use case of Homework 3 (1-11 and 15-19): the same run as in the terminal, shown live on the page.
 
 Every run writes `runs/<time>-<ask|alert>/` (transcript, report, evidence, events, images) as before. Whole camera pictures are never
 written, only crops of the measured region; sound is never written.
@@ -72,8 +72,8 @@ written, only crops of the measured region; sound is never written.
 
 **Sound (use cases 15-19)**, the camera is not even switched on in 15-18:
 
-* **15, the quietest tone the microphone hears.** The agent plays 1000 Hz at four levels in one reply, then halves the interval around the
-  threshold, one tone per reply: *decide, play, read, decide again*. It reports the lowest level that was heard and the highest that was not.
+* **15, the quietest tone the microphone hears.** With the current prompt (Homework 4) the agent plays 1000 Hz at four levels in one reply, then halves the interval around the
+  threshold, one tone per reply: *decide, play, read, decide again*. (The run in the Homework 3 report was made with the earlier prompt and went one tone per reply.) It reports the lowest level that was heard and the highest that was not.
 * **16, frequency response, then a closer look where it is strongest.** The agent measures 300 ... 6000 Hz at one level, then picks the
   strongest of them and plays one more frequency between it and each neighbour (decide, play, read, decide again). The program counts what is
   still missing (it tells the orchestrator, and refuses a `finish` before every frequency and both closer tones are played) and writes the curve
