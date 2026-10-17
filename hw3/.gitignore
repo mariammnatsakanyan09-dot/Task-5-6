@@ -1,0 +1,20 @@
+# Homework 3: never publish whole camera pictures. Only crops of the measured region are ever written by the code,
+# and they stay out of git unless you copy the ones you checked into runs/<timestamp>/images/.
+hw3_work/
+smoke_work/
+probe_out/
+raw/
+*.raw.png
+exec_*.py
+__pycache__/
+.venv/
+*.pyc
+.DS_Store
+# the uvc-util tool (separate repository, built on your Mac)
+uvc-util/
+fake_uvc_state.json
+# the sound devices chosen on your computer by audio_check.py --pairs
+audio.json
+# Homework 4: the web page copies the crops of every run into runs/<time>-<ask|alert>/images/ by itself. Look at them (a person in the
+# picture must not be published), then add the ones that are fine with:  git add -f runs/<folder>/images/<file>.png
+runs/*/images/

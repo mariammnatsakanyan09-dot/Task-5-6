@@ -1,0 +1,173 @@
+[
+  {
+    "n": 1,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -30,
+      "label": "before"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -67.4,
+      "noise_db": -86.2,
+      "snr_db": 18.8,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.76,
+      "chance": 0.58,
+      "delay_s": 0.17,
+      "dominant_hz": 80.6,
+      "dominant_db": -55.8,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -30.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -37.4,
+      "took_s": 3.4,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 18.8 dB above the noise at 1000 Hz.",
+      "label": "before"
+    }
+  },
+  {
+    "n": 2,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -30,
+      "label": "after"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -81.2,
+      "noise_db": -87.4,
+      "snr_db": 6.2,
+      "heard": false,
+      "separation": 1.0,
+      "match": 0.65,
+      "chance": 0.52,
+      "delay_s": 0.16,
+      "dominant_hz": 95.2,
+      "dominant_db": -57.7,
+      "interference": false,
+      "steady": null,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -30.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -51.2,
+      "took_s": 3.3,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was NOT heard: it is only 6.2 dB above the noise that the room makes at that frequency (-87.4 dB; at least 10 dB are needed). Louder, or the sound does not reach the microphone.",
+      "label": "after"
+    }
+  },
+  {
+    "n": 3,
+    "tool": "compare_audio",
+    "args": {
+      "label_a": "before",
+      "label_b": "after"
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "label_a": "before",
+      "label_b": "after",
+      "same_setting": true,
+      "freq_hz_a": 1000.0,
+      "freq_hz_b": 1000.0,
+      "level_db_a": -30.0,
+      "level_db_b": -30.0,
+      "tone_db_a": -67.4,
+      "tone_db_b": -81.2,
+      "delta_tone_db": -13.8,
+      "heard_a": true,
+      "heard_b": false,
+      "noise_db_a": -86.2,
+      "noise_db_b": -87.4,
+      "silent_input_a": false,
+      "silent_input_b": false,
+      "significant": true,
+      "note": "the tone at the microphone became quieter by 13.8 dB (b minus a: -13.8 dB); this is more than the noise explains."
+    }
+  },
+  {
+    "n": 4,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -30,
+      "label": "after_plus"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -71.0,
+      "noise_db": -91.9,
+      "snr_db": 20.9,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.76,
+      "chance": 0.55,
+      "delay_s": 0.16,
+      "dominant_hz": 98.1,
+      "dominant_db": -54.3,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -30.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -41.0,
+      "took_s": 3.3,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 20.9 dB above the noise at 1000 Hz.",
+      "label": "after_plus"
+    }
+  },
+  {
+    "n": 5,
+    "tool": "compare_audio",
+    "args": {
+      "label_a": "before",
+      "label_b": "after_plus"
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "label_a": "before",
+      "label_b": "after_plus",
+      "same_setting": true,
+      "freq_hz_a": 1000.0,
+      "freq_hz_b": 1000.0,
+      "level_db_a": -30.0,
+      "level_db_b": -30.0,
+      "tone_db_a": -67.4,
+      "tone_db_b": -71.0,
+      "delta_tone_db": -3.6,
+      "heard_a": true,
+      "heard_b": true,
+      "noise_db_a": -86.2,
+      "noise_db_b": -91.9,
+      "silent_input_a": false,
+      "silent_input_b": false,
+      "significant": false,
+      "note": "the tone changed by only -3.6 dB (b minus a): no real change."
+    }
+  }
+]

@@ -1,0 +1,31 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	orchestrator(orchestrator)
+	scientist(scientist)
+	general(general)
+	executor(executor)
+	hardware(hardware)
+	human(human)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> orchestrator;
+	executor --> orchestrator;
+	general --> orchestrator;
+	hardware --> orchestrator;
+	human -.-> hardware;
+	human -.-> orchestrator;
+	orchestrator -.-> __end__;
+	orchestrator -.-> executor;
+	orchestrator -.-> general;
+	orchestrator -.-> hardware;
+	orchestrator -.-> human;
+	orchestrator -.-> scientist;
+	scientist --> orchestrator;
+	orchestrator -.-> orchestrator;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

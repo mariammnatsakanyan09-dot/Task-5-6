@@ -1,0 +1,83 @@
+[
+  {
+    "n": 1,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 132.36,
+      "brightness_noise_std": 0.078,
+      "max": 254,
+      "saturated_fraction": 0.0005,
+      "rms_contrast": 67.57,
+      "sharpness": 92.2,
+      "sharpness_norm": 134.1,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 55.68
+    },
+    "why": "Watchdog reports scene sharpness collapse (687 -> 93.9) with normal brightness; confirming with readings at current resolution."
+  },
+  {
+    "n": 2,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 1
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 1.0,
+      "noise_rms_db": -53.3,
+      "strongest_hz": 64.1,
+      "strongest_db": -55.1,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Cross-checking room noise against the -42.3 dBFS limit and silence."
+  },
+  {
+    "n": 3,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 122.03,
+      "brightness_noise_std": 0.078,
+      "max": 225,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 37.78,
+      "sharpness": 199.0,
+      "sharpness_norm": 395.5,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 18.32
+    },
+    "why": "Person reported the lens uncovered; verifying scene brightness and sharpness_norm against the watchdog limits."
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "request": "ALERT from the watchdog (a program that measures the instrument every few seconds, without a model): scene sharpness 187.0 -> 1006.1. Normal values until now: scene brightness 126.6 grey levels, sharpness_norm 187.0, room noise -50.9 dBFS, 1000 Hz check tone above the noise 18.1 dB. The check tone is 1000 Hz at -30 dBFS. Find out what is wrong with the instrument or its surroundings. Take your own readings with the camera and the microphone, choose the checks yourself and compare them with the normal values. When you know the cause, say it and, if a person can fix it (uncover the lens, press the mute or volume button of the device, make the room quiet), ask the person to do it, then check that the readings are back to the normal values. Finish with the diagnosis and the readings.",
+  "source": "alert",
+  "model": "openai/gpt-4o-mini",
+  "fake": false,
+  "decisions": 6,
+  "camera_calls": 6,
+  "refused": 0,
+  "stop_reason": "finish",
+  "model_requests": 21
+}

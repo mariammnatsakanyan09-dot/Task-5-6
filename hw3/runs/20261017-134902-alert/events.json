@@ -1,0 +1,345 @@
+[
+  {
+    "n": 1,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 103.54,
+      "brightness_noise_std": 0.213,
+      "max": 253,
+      "saturated_fraction": 0.0014,
+      "rms_contrast": 75.29,
+      "sharpness": 89.2,
+      "sharpness_norm": 203.7,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 92.82
+    },
+    "why": "Sharpness alert: measure scene brightness, noise and sharpness at current resolution."
+  },
+  {
+    "n": 2,
+    "tool": "capture",
+    "args": {
+      "label": "alert1",
+      "n_frames": 1
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "capture": 1,
+      "label": "alert1",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "seam_found": true,
+      "regions": {
+        "main_view": {
+          "mean_brightness": 40.54,
+          "max": 102,
+          "saturated_fraction": 0.0,
+          "rms_contrast": 17.42,
+          "sharpness": 3.7,
+          "sharpness_norm": 6.4,
+          "size": [
+            1920,
+            816
+          ],
+          "colour_saturation": 137.82
+        },
+        "panorama": {
+          "mean_brightness": 76.86,
+          "max": 254,
+          "saturated_fraction": 0.0016,
+          "rms_contrast": 64.62,
+          "sharpness": 35.4,
+          "sharpness_norm": 119.5,
+          "size": [
+            1920,
+            260
+          ],
+          "colour_saturation": 108.14
+        },
+        "scene": {
+          "mean_brightness": 104.68,
+          "max": 253,
+          "saturated_fraction": 0.0013,
+          "rms_contrast": 74.59,
+          "sharpness": 88.9,
+          "sharpness_norm": 203.6,
+          "size": [
+            1057,
+            261
+          ],
+          "colour_saturation": 91.1
+        }
+      },
+      "saved_crops": [
+        "crops/capture_001_scene.png"
+      ]
+    },
+    "why": "Save the scene crop and get all region statistics including sharpness_norm."
+  },
+  {
+    "n": 3,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 3
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 3.0,
+      "noise_rms_db": -49.6,
+      "strongest_hz": 96.7,
+      "strongest_db": -59.0,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Get the room noise in dBFS to compare with normal -52.1."
+  },
+  {
+    "n": 4,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -20,
+      "seconds": 3,
+      "label": "check1"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -65.4,
+      "noise_db": -84.0,
+      "snr_db": 18.7,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.82,
+      "chance": 0.69,
+      "delay_s": 0.15,
+      "dominant_hz": 90.8,
+      "dominant_db": -52.5,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -20.0,
+      "seconds": 2.8,
+      "tone_segments": 7,
+      "coupling_db": -45.4,
+      "took_s": 4.6,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 18.7 dB above the noise at 1000 Hz.",
+      "label": "check1"
+    },
+    "why": "Run the standard 1000 Hz check tone at -20 dBFS to compare with normal 13.8 dB above noise."
+  },
+  {
+    "n": 5,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 120.34,
+      "brightness_noise_std": 0.223,
+      "max": 206,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 37.25,
+      "sharpness": 137.2,
+      "sharpness_norm": 311.3,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 16.2
+    },
+    "why": "Lens was uncovered by the person; re-measure scene to compare with normal brightness 111.3 and sharpness_norm 940.2."
+  },
+  {
+    "n": 6,
+    "tool": "capture",
+    "args": {
+      "label": "after_uncover",
+      "n_frames": 1
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "capture": 2,
+      "label": "after_uncover",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "seam_found": true,
+      "regions": {
+        "main_view": {
+          "mean_brightness": 111.96,
+          "max": 254,
+          "saturated_fraction": 0.0006,
+          "rms_contrast": 64.29,
+          "sharpness": 27.8,
+          "sharpness_norm": 153.9,
+          "size": [
+            1920,
+            816
+          ],
+          "colour_saturation": 28.68
+        },
+        "panorama": {
+          "mean_brightness": 122.48,
+          "max": 255,
+          "saturated_fraction": 0.0016,
+          "rms_contrast": 52.07,
+          "sharpness": 216.6,
+          "sharpness_norm": 501.8,
+          "size": [
+            1920,
+            260
+          ],
+          "colour_saturation": 19.28
+        },
+        "scene": {
+          "mean_brightness": 120.52,
+          "max": 204,
+          "saturated_fraction": 0.0,
+          "rms_contrast": 37.28,
+          "sharpness": 136.6,
+          "sharpness_norm": 311.0,
+          "size": [
+            1057,
+            261
+          ],
+          "colour_saturation": 16.22
+        }
+      },
+      "saved_crops": [
+        "crops/capture_002_scene.png"
+      ]
+    },
+    "why": "Save the scene crop after the lens was uncovered and read all regions."
+  },
+  {
+    "n": 7,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 126.16,
+      "brightness_noise_std": 0.035,
+      "max": 254,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 39.01,
+      "sharpness": 401.9,
+      "sharpness_norm": 1071.8,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 18.93
+    },
+    "why": "Lens wiped by the person; re-measure scene to compare with normal brightness 111.3 and sharpness_norm 940.2."
+  },
+  {
+    "n": 8,
+    "tool": "capture",
+    "args": {
+      "label": "after_wipe",
+      "n_frames": 1
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "capture": 3,
+      "label": "after_wipe",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "seam_found": true,
+      "regions": {
+        "main_view": {
+          "mean_brightness": 100.14,
+          "max": 254,
+          "saturated_fraction": 0.0,
+          "rms_contrast": 45.6,
+          "sharpness": 114.3,
+          "sharpness_norm": 454.2,
+          "size": [
+            1920,
+            820
+          ],
+          "colour_saturation": 29.18
+        },
+        "panorama": {
+          "mean_brightness": 127.21,
+          "max": 255,
+          "saturated_fraction": 0.0028,
+          "rms_contrast": 52.52,
+          "sharpness": 589.1,
+          "sharpness_norm": 1062.2,
+          "size": [
+            1920,
+            256
+          ],
+          "colour_saturation": 19.87
+        },
+        "scene": {
+          "mean_brightness": 125.99,
+          "max": 254,
+          "saturated_fraction": 0.0,
+          "rms_contrast": 38.94,
+          "sharpness": 403.4,
+          "sharpness_norm": 1069.9,
+          "size": [
+            1057,
+            261
+          ],
+          "colour_saturation": 18.91
+        }
+      },
+      "saved_crops": [
+        "crops/capture_003_scene.png"
+      ]
+    },
+    "why": "Save the scene crop after wiping and read all regions."
+  }
+]

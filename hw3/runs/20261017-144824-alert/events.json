@@ -1,0 +1,147 @@
+[
+  {
+    "n": 1,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 2
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 2.0,
+      "noise_rms_db": -53.6,
+      "strongest_hz": 60.8,
+      "strongest_db": -56.7,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Room noise rose from -52.6 to -42.4 dBFS; I need the current room noise reading first."
+  },
+  {
+    "n": 2,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -40,
+      "label": "check_1k"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -63.7,
+      "noise_db": -76.8,
+      "snr_db": 13.2,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.76,
+      "chance": 0.67,
+      "delay_s": 0.16,
+      "dominant_hz": 95.2,
+      "dominant_db": -54.0,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -40.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -23.7,
+      "took_s": 3.4,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 13.2 dB above the noise at 1000 Hz.",
+      "label": "check_1k"
+    },
+    "why": "Usual check tone at the usual level, to see whether it is heard well above the noise."
+  },
+  {
+    "n": 3,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 127.59,
+      "brightness_noise_std": 0.17,
+      "max": 249,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 40.51,
+      "sharpness": 269.8,
+      "sharpness_norm": 513.7,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 14.64
+    },
+    "why": "Checking brightness and sharpness of the scene against the normal values."
+  },
+  {
+    "n": 4,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -20,
+      "label": "check_1k_m20"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -44.2,
+      "noise_db": -57.3,
+      "snr_db": 13.0,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.77,
+      "chance": 0.67,
+      "delay_s": 0.15,
+      "dominant_hz": 1000.5,
+      "dominant_db": -43.1,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -20.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -24.2,
+      "took_s": 3.4,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 13 dB above the noise at 1000 Hz.",
+      "label": "check_1k_m20"
+    },
+    "why": "At -40 dBFS the tone was heard only 13.2 dB above the noise, below the 15 dB needed, so I raise to -20."
+  },
+  {
+    "n": 5,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 2
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 2.0,
+      "noise_rms_db": -52.3,
+      "strongest_hz": 58.2,
+      "strongest_db": -56.9,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Re-checking room noise to see whether the rise is persistent or transient."
+  }
+]

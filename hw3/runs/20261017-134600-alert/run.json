@@ -1,0 +1,11 @@
+{
+  "request": "ALERT from the watchdog (a program that measures the instrument every few seconds, without a model): the check tone is no longer heard (it was 20 dB above the noise, now -37 dB). Normal values until now: scene brightness 118.2 grey levels, sharpness_norm 389.5, room noise -52.2 dBFS, 1000 Hz check tone above the noise 19.7 dB. The check tone is 1000 Hz at -20 dBFS. What the program knows (hypotheses to test, the checks are yours): the check tone is weaker or lost (the volume of the loudspeaker was lowered, or the room is louder). COMPENSATE YOURSELF: play the tone again with a higher level_db (-20, then -12, the maximum) until it is heard 15 dB or more above the noise; report how many dB you had to add (that is the loss) and that the instrument works again. Ask the person to press the volume button only if even -12 dBFS is not heard. Find out what is wrong with the instrument or its surroundings. Take your own readings with the camera and the microphone, choose the checks yourself and compare them with the normal values (do not repeat the same measurement more than twice). You act yourself wherever the instrument allows it (for example the level of the check tone). Ask the person ONLY for what nothing but a person can do (uncover the lens, press the volume or mute button, unmute the microphone), as ONE concrete action (for example 'Please uncover the lens and reply done'), never a general request to 'check' things, and never to be quiet, turn music down or change the light. After the person says done, measure once more and compare with the normal values; if they are back within the normal range, say so and finish. Finish with the diagnosis, what you did and the readings.",
+  "source": "alert",
+  "model": "anthropic/claude-sonnet-5.5",
+  "fake": false,
+  "decisions": 4,
+  "camera_calls": 8,
+  "refused": 0,
+  "stop_reason": "finish",
+  "model_requests": 10
+}

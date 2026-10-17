@@ -1,0 +1,11 @@
+{
+  "request": "ALERT from the watchdog (a program that measures the instrument every few seconds, without a model): scene sharpness 1027.4 -> 202.9. Normal values until now: scene brightness 119.6 grey levels, sharpness_norm 1027.4, room noise -50.6 dBFS. What the program knows (hypotheses to test, the checks are yours): observed on this camera: when the lens is covered by a hand the brightness stays near normal (the automatic exposure brightens the dark picture) and sharpness_norm collapses to a few percent; so a sharpness collapse with normal brightness points to a covered, dirty or blocked lens. Only a person can uncover it: ask for exactly that. Right after the lens is uncovered the camera needs about 10 s to readjust and the first readings can still be low; the program waits before your next turn, but do not blame a smudge or ask for wiping unless a second reading a few seconds later is still low. Find out what is wrong with the instrument or its surroundings. Take your own readings with the camera and the microphone, choose the checks yourself and compare them with the normal values (do not repeat the same measurement more than twice). You act yourself wherever the instrument allows it (for example the level of the check tone). Ask the person ONLY for what nothing but a person can do (uncover the lens, press the volume or mute button, unmute the microphone), as ONE concrete action (for example 'Please uncover the lens and reply done'), never a general request to 'check' things, and never to be quiet, turn music down or change the light. After the person says done, measure once more and compare with the normal values; if they are back within the normal range, say so and finish. Finish with the diagnosis, what you did and the readings.",
+  "source": "alert",
+  "model": "anthropic/claude-sonnet-5.5",
+  "fake": false,
+  "decisions": 6,
+  "camera_calls": 12,
+  "refused": 0,
+  "stop_reason": "finish",
+  "model_requests": 15
+}

@@ -1,0 +1,258 @@
+[
+  {
+    "n": 1,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 120.46,
+      "brightness_noise_std": 0.186,
+      "max": 210,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 38.1,
+      "sharpness": 182.7,
+      "sharpness_norm": 408.1,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 14.5
+    },
+    "why": "Check camera brightness and sharpness against normal 118.2 / 389.5."
+  },
+  {
+    "n": 2,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 3
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 3.0,
+      "noise_rms_db": -49.2,
+      "strongest_hz": 87.6,
+      "strongest_db": -54.1,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Check room noise against normal -52.2 dBFS."
+  },
+  {
+    "n": 3,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -20,
+      "seconds": 3,
+      "label": "check20"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -89.4,
+      "noise_db": -86.7,
+      "snr_db": -2.7,
+      "heard": false,
+      "separation": 0.61,
+      "match": 0.18,
+      "chance": 0.27,
+      "delay_s": 0.16,
+      "dominant_hz": 86.4,
+      "dominant_db": -49.6,
+      "interference": false,
+      "steady": null,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -20.0,
+      "seconds": 2.8,
+      "tone_segments": 7,
+      "coupling_db": -69.4,
+      "took_s": 4.6,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was NOT heard: it is only -2.7 dB above the noise that the room makes at that frequency (-86.7 dB; at least 10 dB are needed). Louder, or the sound does not reach the microphone.",
+      "label": "check20"
+    },
+    "why": "Replay the check tone at its normal level -20 dBFS to read snr_db."
+  },
+  {
+    "n": 4,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -12,
+      "seconds": 3,
+      "label": "check12"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -120.0,
+      "noise_db": -84.8,
+      "snr_db": -35.2,
+      "heard": false,
+      "separation": 0.55,
+      "match": 0.29,
+      "chance": 0.33,
+      "delay_s": 0.19,
+      "dominant_hz": 89.4,
+      "dominant_db": -47.1,
+      "interference": false,
+      "steady": null,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -12.0,
+      "seconds": 2.8,
+      "tone_segments": 7,
+      "coupling_db": -108.0,
+      "took_s": 4.6,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was NOT heard: it is only -35.2 dB above the noise that the room makes at that frequency (-84.8 dB; at least 10 dB are needed). Louder, or the sound does not reach the microphone.",
+      "label": "check12"
+    },
+    "why": "Not heard at -20; replay at maximum -12 dBFS to compensate."
+  },
+  {
+    "n": 5,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -20,
+      "seconds": 3,
+      "label": "after_volume20"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -77.3,
+      "noise_db": -82.4,
+      "snr_db": 5.1,
+      "heard": false,
+      "separation": 1.0,
+      "match": 0.65,
+      "chance": 0.51,
+      "delay_s": 0.17,
+      "dominant_hz": 80.6,
+      "dominant_db": -51.1,
+      "interference": false,
+      "steady": null,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -20.0,
+      "seconds": 2.8,
+      "tone_segments": 7,
+      "coupling_db": -57.3,
+      "took_s": 4.6,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was NOT heard: it is only 5.1 dB above the noise that the room makes at that frequency (-82.4 dB; at least 10 dB are needed). Louder, or the sound does not reach the microphone.",
+      "label": "after_volume20"
+    },
+    "why": "Person pressed volume-up; replay the check tone at normal -20 dBFS to read snr_db."
+  },
+  {
+    "n": 6,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 3
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 3.0,
+      "noise_rms_db": -49.5,
+      "strongest_hz": 61.4,
+      "strongest_db": -54.0,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Room noise after the volume press, to compare with normal -52.2 dBFS."
+  },
+  {
+    "n": 7,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 117.17,
+      "brightness_noise_std": 0.106,
+      "max": 205,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 37.1,
+      "sharpness": 169.9,
+      "sharpness_norm": 377.2,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 20.34
+    },
+    "why": "Camera recheck, same 5 frames as before, versus 118.2 / 389.5."
+  },
+  {
+    "n": 8,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -12,
+      "seconds": 3,
+      "label": "after_volume12"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -60.0,
+      "noise_db": -79.0,
+      "snr_db": 19.0,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.82,
+      "chance": 0.7,
+      "delay_s": 0.15,
+      "dominant_hz": 80.6,
+      "dominant_db": -48.8,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -12.0,
+      "seconds": 2.8,
+      "tone_segments": 7,
+      "coupling_db": -48.0,
+      "took_s": 4.6,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 19 dB above the noise at 1000 Hz.",
+      "label": "after_volume12"
+    },
+    "why": "At -20 the tone is only 5.1 dB above noise; replay at the maximum -12 dBFS."
+  }
+]

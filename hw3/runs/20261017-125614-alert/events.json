@@ -1,0 +1,144 @@
+[
+  {
+    "n": 1,
+    "tool": "set_resolution",
+    "args": {
+      "width": 1920,
+      "height": 1080
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "requested": [
+        1920,
+        1080
+      ],
+      "accepted": [
+        1920,
+        1080
+      ],
+      "note": "the camera delivers this size now"
+    },
+    "why": "The sharpness dropped significantly, so I will check the scene at the highest resolution."
+  },
+  {
+    "n": 2,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 2
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 2.0,
+      "noise_rms_db": -50.4,
+      "strongest_hz": 57.6,
+      "strongest_db": -54.7,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "To measure the current room noise level, which was previously -51.2 dBFS."
+  },
+  {
+    "n": 3,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -30,
+      "seconds": 3,
+      "label": "check_tone"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -44.8,
+      "noise_db": -67.0,
+      "snr_db": 22.2,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.82,
+      "chance": 0.71,
+      "delay_s": 0.17,
+      "dominant_hz": 1000.5,
+      "dominant_db": -44.4,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -30.0,
+      "seconds": 2.8,
+      "tone_segments": 7,
+      "coupling_db": -14.8,
+      "took_s": 4.6,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 22.2 dB above the noise at 1000 Hz.",
+      "label": "check_tone"
+    },
+    "why": "To check the audio levels at 1000 Hz, which is the specified frequency."
+  },
+  {
+    "n": 4,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 127.7,
+      "brightness_noise_std": 0.023,
+      "max": 254,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 38.69,
+      "sharpness": 114.5,
+      "sharpness_norm": 185.5,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 11.69
+    },
+    "why": "To measure the brightness and sharpness of the scene at the current resolution, as sharpness dropped significantly."
+  },
+  {
+    "n": 5,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 5
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 5,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 126.99,
+      "brightness_noise_std": 0.084,
+      "max": 254,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 38.54,
+      "sharpness": 115.3,
+      "sharpness_norm": 187.1,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 11.82
+    },
+    "why": "To measure the brightness and sharpness of the scene again at the resolution of 1920x1080 after the adjustments made by the person."
+  }
+]

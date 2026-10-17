@@ -1,0 +1,11 @@
+{
+  "request": "ALERT from the watchdog (a program that measures the instrument every few seconds, without a model): room noise -45.5 -> -35.1 dBFS. Normal values until now: scene brightness 123.2 grey levels, sharpness_norm 385.1, room noise -45.5 dBFS. What the program knows (hypotheses to test, the checks are yours): room noise rose. Do NOT ask the person to be quiet or to turn anything down. Act yourself: play the check tone at the usual level; if it is still heard 15 dB or more above the noise, report 'the room is louder by X dB, the instrument still works, nothing to do' and finish; if it is not, raise level_db yourself (-20, then -12, the maximum) until it is heard and report the level you needed. Find out what is wrong with the instrument or its surroundings. Take your own readings with the camera and the microphone, choose the checks yourself and compare them with the normal values (do not repeat the same measurement more than twice). You act yourself wherever the instrument allows it (for example the level of the check tone). Ask the person ONLY for what nothing but a person can do (uncover the lens, press the volume or mute button, unmute the microphone), as ONE concrete action (for example 'Please uncover the lens and reply done'), never a general request to 'check' things, and never to be quiet, turn music down or change the light. After the person says done, measure once more and compare with the normal values; if they are back within the normal range, say so and finish. Finish with the diagnosis, what you did and the readings.",
+  "source": "alert",
+  "model": "anthropic/claude-sonnet-5.5",
+  "fake": false,
+  "decisions": 3,
+  "camera_calls": 9,
+  "refused": 0,
+  "stop_reason": "finish",
+  "model_requests": 25
+}

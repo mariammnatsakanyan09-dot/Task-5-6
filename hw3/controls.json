@@ -1,0 +1,14 @@
+{
+  "camera": {
+    "index": 0,
+    "api": "macOS AVFoundation",
+    "frame": [
+      1920,
+      1080
+    ],
+    "platform": "darwin",
+    "via": "none",
+    "probed": "2026-10-15T13:44:12"
+  },
+  "controls": {}
+}

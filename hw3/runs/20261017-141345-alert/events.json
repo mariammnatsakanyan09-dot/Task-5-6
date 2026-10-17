@@ -1,0 +1,404 @@
+[
+  {
+    "n": 1,
+    "tool": "camera_info",
+    "args": {},
+    "ok": false,
+    "result": {
+      "instrument": "Pano-360 (THAT DRAGONFLY), USB video class camera, 360-degree optics",
+      "interface": "macOS AVFoundation through OpenCV (opencv backend), camera index 0",
+      "layout_verified": true,
+      "frame_size": [
+        1920,
+        1080
+      ],
+      "layout": {
+        "seam_row": 816,
+        "seam_found": true
+      },
+      "regions": {
+        "main_view": [
+          0,
+          0,
+          1920,
+          816
+        ],
+        "panorama": [
+          0,
+          816,
+          1920,
+          260
+        ],
+        "scene": [
+          71,
+          817,
+          1057,
+          261
+        ]
+      },
+      "measured_region_source": "roi.json",
+      "allowed_resolutions": [
+        "640x480",
+        "1280x720",
+        "1920x1080"
+      ],
+      "controls": "resolution only; no camera control (brightness, contrast, saturation ...) is available on this computer",
+      "colour": true
+    },
+    "why": "Alert on sharpness; I start by reading the instrument description and regions."
+  },
+  {
+    "n": 2,
+    "tool": "capture",
+    "args": {
+      "label": "alert1",
+      "n_frames": 1
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "capture": 4,
+      "label": "alert1",
+      "resolution": [
+        1920,
+        1080
+      ],
+      "seam_found": true,
+      "regions": {
+        "main_view": {
+          "mean_brightness": 52.72,
+          "max": 251,
+          "saturated_fraction": 0.0,
+          "rms_contrast": 23.14,
+          "sharpness": 8.9,
+          "sharpness_norm": 34.3,
+          "size": [
+            1920,
+            816
+          ],
+          "colour_saturation": 112.37
+        },
+        "panorama": {
+          "mean_brightness": 77.59,
+          "max": 254,
+          "saturated_fraction": 0.0016,
+          "rms_contrast": 71.69,
+          "sharpness": 46.5,
+          "sharpness_norm": 191.8,
+          "size": [
+            1920,
+            260
+          ],
+          "colour_saturation": 93.56
+        },
+        "scene": {
+          "mean_brightness": 105.98,
+          "max": 254,
+          "saturated_fraction": 0.0014,
+          "rms_contrast": 84.53,
+          "sharpness": 96.2,
+          "sharpness_norm": 218.8,
+          "size": [
+            1057,
+            261
+          ],
+          "colour_saturation": 82.31
+        }
+      },
+      "saved_crops": [
+        "crops/capture_004_scene.png"
+      ]
+    },
+    "why": "Get current scene statistics to compare with normal values."
+  },
+  {
+    "n": 3,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 10
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 10,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 105.4,
+      "brightness_noise_std": 0.764,
+      "max": 254,
+      "saturated_fraction": 0.0008,
+      "rms_contrast": 81.94,
+      "sharpness": 97.9,
+      "sharpness_norm": 216.5,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 80.1
+    },
+    "why": "Get brightness noise and averaged sharpness of the scene."
+  },
+  {
+    "n": 4,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 3
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 3.0,
+      "noise_rms_db": -44.1,
+      "strongest_hz": 97.2,
+      "strongest_db": -48.0,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Check the room noise against the normal -50.6 dBFS."
+  },
+  {
+    "n": 5,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -50,
+      "seconds": 1.6,
+      "label": "t1000_a"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -77.2,
+      "noise_db": -87.5,
+      "snr_db": 10.3,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.68,
+      "chance": 0.56,
+      "delay_s": 0.15,
+      "dominant_hz": 92.3,
+      "dominant_db": -53.0,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -50.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -27.2,
+      "took_s": 3.4,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 10.3 dB above the noise at 1000 Hz.",
+      "label": "t1000_a"
+    },
+    "why": "Check the speaker/microphone path at 1000 Hz, starting quiet."
+  },
+  {
+    "n": 6,
+    "tool": "play_tone",
+    "args": {
+      "freq_hz": 1000,
+      "level_db": -35,
+      "seconds": 1.6,
+      "label": "t1000_b"
+    },
+    "ok": true,
+    "result": {
+      "tone_db": -63.2,
+      "noise_db": -77.9,
+      "snr_db": 14.7,
+      "heard": true,
+      "separation": 1.0,
+      "match": 0.77,
+      "chance": 0.63,
+      "delay_s": 0.15,
+      "dominant_hz": 85.0,
+      "dominant_db": -54.0,
+      "interference": false,
+      "steady": true,
+      "clipped": false,
+      "silent_input": false,
+      "ok": true,
+      "freq_hz": 1000.0,
+      "level_db": -35.0,
+      "seconds": 1.6,
+      "tone_segments": 4,
+      "coupling_db": -28.2,
+      "took_s": 3.4,
+      "loudspeaker": "Pano-360",
+      "microphone": "MacBook Pro Microphone",
+      "note": "the tone was heard 14.7 dB above the noise at 1000 Hz.",
+      "label": "t1000_b"
+    },
+    "why": "At -50 snr was only 10.3, near threshold; I raise the level to get a clearer reading."
+  },
+  {
+    "n": 7,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 10
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 10,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 122.45,
+      "brightness_noise_std": 0.132,
+      "max": 217,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 39.11,
+      "sharpness": 192.0,
+      "sharpness_norm": 395.5,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 17.32
+    },
+    "why": "Lens was uncovered; I re-measure scene sharpness and brightness against normal values."
+  },
+  {
+    "n": 8,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 3
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 3.0,
+      "noise_rms_db": -49.2,
+      "strongest_hz": 58.1,
+      "strongest_db": -53.7,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Compare room noise with the normal -50.6 dBFS after the person's action."
+  },
+  {
+    "n": 9,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 10
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 10,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 122.97,
+      "brightness_noise_std": 0.163,
+      "max": 220,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 39.03,
+      "sharpness": 193.1,
+      "sharpness_norm": 403.1,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 17.48
+    },
+    "why": "sharpness_norm 395.5 is still well below 1027.4; I repeat once after the camera had time to readjust."
+  },
+  {
+    "n": 10,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 10
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 10,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 121.38,
+      "brightness_noise_std": 0.105,
+      "max": 234,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 38.78,
+      "sharpness": 210.3,
+      "sharpness_norm": 390.9,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 16.92
+    },
+    "why": "Lens was wiped; I re-measure scene sharpness and brightness against normal values (1027.4 / 119.6)."
+  },
+  {
+    "n": 11,
+    "tool": "listen_noise",
+    "args": {
+      "seconds": 3
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "seconds": 3.0,
+      "noise_rms_db": -48.1,
+      "strongest_hz": 60.7,
+      "strongest_db": -50.5,
+      "silent_input": false,
+      "microphone": "MacBook Pro Microphone",
+      "note": "the room noise as the microphone hears it; nothing was played and nothing is stored."
+    },
+    "why": "Optional check of the room noise against normal -50.6 dBFS (earlier -49.2)."
+  },
+  {
+    "n": 12,
+    "tool": "measure_region",
+    "args": {
+      "region": "scene",
+      "n_frames": 10
+    },
+    "ok": true,
+    "result": {
+      "ok": true,
+      "region": "scene",
+      "n_frames": 10,
+      "resolution": [
+        1920,
+        1080
+      ],
+      "mean_brightness": 121.27,
+      "brightness_noise_std": 0.07,
+      "max": 234,
+      "saturated_fraction": 0.0,
+      "rms_contrast": 38.69,
+      "sharpness": 206.9,
+      "sharpness_norm": 391.1,
+      "region_size": [
+        1057,
+        261
+      ],
+      "colour_saturation": 16.79
+    },
+    "why": "sharpness_norm 390.9 is still far below 1027.4; I repeat once, a few seconds later, to allow readjustment."
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "scene": {
+    "x": 71,
+    "y": 817,
+    "w": 1057,
+    "h": 261,
+    "frame_width": 1920,
+    "frame_height": 1080,
+    "source": "probe_out/snap.png"
+  }
+}
