@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Starts the guard when you log in and starts it again if it stops. No key in this file: start_guard.sh reads it from the Keychain.
+     1. Replace /Users/YOU/Desktop/Task5-6/hw4 below with the real folder (three places).
+     2. Save as ~/Library/LaunchAgents/com.labwatchdog.plist
+     3. launchctl load ~/Library/LaunchAgents/com.labwatchdog.plist          (stop it: launchctl unload ...)
+     Change the arguments below to your own (the options of web_app.py: guard-hours, sensor-port and the others, each with two hyphens in front).
+     Untested on a real Mac: it was written on Linux. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.labwatchdog</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/YOU/Desktop/Task5-6/hw4/start_guard.sh</string>
+    <string>--guard-hours</string><string>22:00-07:00</string>
+  </array>
+  <key>WorkingDirectory</key><string>/Users/YOU/Desktop/Task5-6/hw4</string>
+  <key>RunAtLoad</key><true/>
+  <key>KeepAlive</key><true/>
+  <key>ThrottleInterval</key><integer>30</integer>
+  <key>StandardOutPath</key><string>/Users/YOU/Desktop/Task5-6/hw4/guard.out.log</string>
+  <key>StandardErrorPath</key><string>/Users/YOU/Desktop/Task5-6/hw4/guard.out.log</string>
+</dict>
+</plist>

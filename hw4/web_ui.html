@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hardware-in-the-loop lab</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--ink:#1c2230;--mute:#667085;--line:#e3e6ec;--accent:#2457d6;--ok:#16794c;--bad:#c4281c;--warn:#a15c00;--chip:#eef1f6}
+@media (prefers-color-scheme:dark){:root{--bg:#10131a;--card:#181c25;--ink:#e8ebf2;--mute:#97a0b3;--line:#2a3040;--accent:#7aa2ff;--ok:#5bd69a;--bad:#ff7b72;--warn:#f0b35a;--chip:#232938}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0;z-index:5}
+h1{font-size:17px;margin:0}
+.pill{padding:3px 12px;border-radius:99px;font-weight:600;font-size:13px;background:var(--chip)}
+.pill.watching{background:#dff5e8;color:var(--ok)}.pill.investigating{background:#fde8e6;color:var(--bad)}
+.pill.running{background:#e4ecff;color:var(--accent)}.pill.paused{background:#fff0d6;color:var(--warn)}
+.sub{color:var(--mute);font-size:13px}
+main{padding:16px;display:grid;grid-template-columns:minmax(320px,440px) 1fr;gap:16px;max-width:1400px;margin:0 auto;padding-bottom:110px}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px}
+.card h2{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--mute);margin:0 0 10px}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+label{display:block;font-size:13px;color:var(--mute);margin:8px 0 3px}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit}
+textarea{min-height:64px;resize:vertical}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{padding:8px 14px;border:0;border-radius:8px;background:var(--accent);color:#fff;font:inherit;font-weight:600;cursor:pointer}
+button.ghost{background:var(--chip);color:var(--ink)}button.bad{background:var(--bad)}button:disabled{opacity:.45;cursor:default}
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:10px}
+.tile{background:var(--chip);border-radius:10px;padding:8px 10px}.tile b{display:block;font-size:20px}.tile span{font-size:12px;color:var(--mute)}
+.tile.changed b{color:var(--bad)}
+canvas{width:100%;height:78px;display:block}
+.cap{font-size:12px;color:var(--mute);margin:6px 0 2px}
+#feed{display:flex;flex-direction:column;gap:8px}
+.ev{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--card);word-break:break-word}
+.ev .who{display:inline-block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:1px 8px;border-radius:99px;background:var(--chip);margin-right:6px}
+.ev.alert{border-color:var(--bad);background:#fde8e611}.ev.alert .who{background:var(--bad);color:#fff}
+.ev.tool{border-left:4px solid var(--accent)}.ev.res{border-left:4px solid var(--ok)}.ev.err{border-color:var(--bad)}
+.ev.pause{border-color:var(--warn)}.ev.final{border-color:var(--ok)}
+.why{color:var(--mute);font-style:italic}
+code,pre{font:12.5px/1.45 ui-monospace,Menlo,Consolas,monospace}
+pre{white-space:pre-wrap;margin:6px 0 0;max-height:360px;overflow:auto;background:var(--chip);padding:8px;border-radius:8px}
+.thumb{max-width:100%;max-height:150px;border-radius:8px;margin-top:6px;border:1px solid var(--line)}
+#pausebar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:3px solid var(--warn);padding:12px 16px;display:none;z-index:9}
+#pausebar.on{display:block}#pausebar p{margin:0 0 8px;font-weight:600}
+.small{font-size:12px;color:var(--mute)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Hardware-in-the-loop lab</h1><span id="pill" class="pill">idle</span>
+  <span class="sub" id="info"></span>
+</header>
+<main>
+  <div class="col">
+    <div class="card">
+      <h2>Watch</h2>
+      <div class="tiles">
+        <div class="tile" id="t_brightness"><b>-</b><span>scene brightness</span></div>
+        <div class="tile" id="t_sharpness"><b>-</b><span>sharpness</span></div>
+        <div class="tile" id="t_noise_db"><b>-</b><span>room noise, dBFS</span></div>
+        <div class="tile" id="t_tone_coupling"><b>-</b><span>check tone at the microphone, dB (falls when the volume is lowered)</span></div>
+        <div class="tile" id="t_change"><b>-</b><span>picture differs from the reference, % of the cells (guard mode: from 5 % on it counts)</span></div>
+        <div class="tile" id="t_warm"><b>-</b><span>red / blue ratio of the picture (a flame pushes it up)</span></div>
+      </div>
+      <canvas id="c_brightness"></canvas><div class="cap">scene brightness</div>
+      <canvas id="c_sharpness"></canvas><div class="cap">sharpness (sharpness_norm)</div>
+      <canvas id="c_noise_db"></canvas><div class="cap">room noise (dBFS)</div>
+      <div class="row" style="margin-top:10px">
+        <div style="flex:1"><label>check every, s</label><input id="interval" type="number" value="4" min="2" step="1"></div>
+        <div style="flex:1"><label>beep check every, s (0 = off)</label><input id="tone" type="number" value="0" min="0" step="10"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button id="bWatch">Start watching</button><button id="bStop" class="ghost" disabled>Stop</button>
+      </div>
+      <p class="small">While everything is normal no model is called. When the numbers disagree with the normal ones in 2 of the last 3 checks, the agent is called and investigates.</p>
+    </div>
+    <div class="card" id="guardCard" style="display:none">
+      <h2>Guard</h2>
+      <p class="small">Somebody is allowed in the lab? Tell the program: the guard is paused, and afterwards the room is measured anew. (At the start of the guard hours the program also asks this by push message.)</p>
+      <div class="row">
+        <button id="bPause60">I am in the lab: pause the guard 60 min</button>
+        <button class="ghost" id="bPause240">4 hours</button>
+        <button class="ghost" id="bResume">Resume the guard now</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Ask</h2>
+      <label>use case</label>
+      <select id="preset"><option value="">(my own request)</option></select>
+      <label>request</label>
+      <textarea id="req" placeholder="e.g. How sharp is the picture?"></textarea>
+      <div class="row" style="margin-top:10px"><button id="bAsk">Run</button></div>
+    </div>
+    <div class="card" id="fakeCard" style="display:none">
+      <h2>Simulated instrument (--fake)</h2>
+      <p class="small">These buttons break the synthetic instrument. The watchdog has to notice.</p>
+      <div class="row">
+        <button class="ghost" data-fake='{"covered":true}'>Cover lens</button><button class="ghost" data-fake='{"covered":false}'>Uncover</button>
+        <button class="ghost" data-fake='{"muted":true}'>Mute mic</button><button class="ghost" data-fake='{"muted":false}'>Unmute</button>
+        <button class="ghost" data-fake='{"person":true}'>Person enters</button><button class="ghost" data-fake='{"person":false}'>Person leaves</button>
+        <button class="ghost" data-fake='{"warm":1.15}'>Warm light (flame?)</button><button class="ghost" data-fake='{"warm":1.0}'>Normal light</button>
+        <button class="ghost" data-fake='{"smoke":true}'>Smoke detector alarm</button><button class="ghost" data-fake='{"smoke":false}'>Detector: all clear</button>
+        <button class="ghost" data-fake='{"noise_db":-35}'>Noise up</button><button class="ghost" data-fake='{"noise_db":-60}'>Noise down</button>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card" id="picCard" style="display:none"><h2>Last picture of the measured region</h2><img id="pic" class="thumb" style="max-height:220px" alt=""></div>
+    <div class="card"><h2>Live log: decisions, commands, measurements</h2><div id="feed"></div></div>
+  </div>
+</main>
+<div id="pausebar"><p id="pq"></p><div class="row" id="pbtns"></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const KEYS=["brightness","sharpness","noise_db","tone_coupling"];
+const series={brightness:[],sharpness:[],noise_db:[],tone_coupling:[]};
+let S={mode:"idle",fake:false};
+
+function post(path,body){return fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body||{})}).then(r=>r.json())}
+function setMode(m){
+  S.mode=m;const p=$("#pill");p.textContent=m;p.className="pill "+m;
+  $("#bWatch").disabled=m!=="idle";$("#bAsk").disabled=m!=="idle";$("#bStop").disabled=m==="idle";
+}
+function add(cls,html){
+  const d=document.createElement("div");d.className="ev "+cls;d.innerHTML=html;
+  const f=$("#feed");f.prepend(d);while(f.children.length>400)f.lastChild.remove();return d;
+}
+function draw(key){
+  const c=$("#c_"+key);if(!c)return;const dpr=window.devicePixelRatio||1;
+  const w=c.clientWidth,h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;const g=c.getContext("2d");g.scale(dpr,dpr);g.clearRect(0,0,w,h);
+  const pts=series[key].slice(-120);if(pts.length<2)return;
+  const vals=pts.map(p=>p.v).concat(pts.map(p=>p.n).filter(v=>v!=null));
+  let lo=Math.min(...vals),hi=Math.max(...vals);
+  const mid=(lo+hi)/2,need=key==="brightness"?40:key==="sharpness"?Math.max(5,.5*Math.abs(mid)):key==="noise_db"?10:12;   // a quiet signal stays flat: the scale is never narrower than a change that counts
+  if(hi-lo<need){lo=mid-need/2;hi=mid+need/2}
+  const pad=(hi-lo)*.15;lo-=pad;hi+=pad;
+  const X=i=>6+i*(w-12)/(pts.length-1),Y=v=>h-6-(v-lo)/(hi-lo)*(h-12);
+  const css=getComputedStyle(document.documentElement);
+  const last=pts[pts.length-1];
+  if(last.n!=null){g.strokeStyle=css.getPropertyValue("--mute");g.setLineDash([4,4]);g.beginPath();g.moveTo(0,Y(last.n));g.lineTo(w,Y(last.n));g.stroke();g.setLineDash([])}
+  g.strokeStyle=css.getPropertyValue("--accent");g.lineWidth=2;g.beginPath();
+  pts.forEach((p,i)=>i?g.lineTo(X(i),Y(p.v)):g.moveTo(X(i),Y(p.v)));g.stroke();
+  pts.forEach((p,i)=>{if(p.flag){g.fillStyle=css.getPropertyValue("--bad");g.beginPath();g.arc(X(i),Y(p.v),4,0,7);g.fill()}});
+}
+function sample(ev){
+  const bad=ev.status==="changed";
+  if(ev.change!=null){const t=$("#t_change");t.querySelector("b").textContent=(100*ev.change).toFixed(0)+" %";t.classList.toggle("changed",ev.change>=0.05)}
+  if(ev.warm!=null)$("#t_warm").querySelector("b").textContent=Number(ev.warm).toFixed(2);
+  KEYS.forEach(k=>{
+    if(ev[k]==null)return;
+    series[k].push({v:ev[k],n:ev.normal?ev.normal[k]:null,flag:bad});if(series[k].length>600)series[k].shift();
+    const t=$("#t_"+k);t.querySelector("b").textContent=Number(ev[k]).toFixed(k==="sharpness"?1:1);t.classList.toggle("changed",bad);draw(k);
+  });
+}
+function crops(list){
+  return (list||[]).map(p=>`<img class="thumb" src="/api/crop?path=${encodeURIComponent(p)}&t=${Date.now()}" alt="">`).join("");
+}
+function pauseBar(p){
+  const bar=$("#pausebar"),btns=$("#pbtns");$("#pq").textContent=p.question||"";btns.innerHTML="";
+  const send=t=>{post("/api/reply",{text:t});};
+  if(p.kind==="hard_decision"){
+    const a=document.createElement("button");a.textContent="Accept";a.onclick=()=>send("accept");
+    const r=document.createElement("button");r.textContent="Refuse";r.className="bad";r.onclick=()=>send("refuse");btns.append(a,r);
+  }else{
+    const i=document.createElement("input");i.style.maxWidth="360px";i.placeholder=p.kind==="scene_action"?"done, and what you did (e.g. done, uncovered)":"your answer";
+    const b=document.createElement("button");b.textContent=p.kind==="scene_action"?"Done":"Send";
+    b.onclick=()=>send(i.value.trim()||(p.kind==="scene_action"?"done":""));i.onkeydown=e=>{if(e.key==="Enter")b.click()};btns.append(i,b);
+    if(p.kind==="scene_action")i.value="done";setTimeout(()=>i.focus(),50);
+  }
+  bar.classList.add("on");
+}
+function handle(ev){
+  switch(ev.type){
+    case "mode":setMode(ev.mode);if(ev.mode!=="paused")$("#pausebar").classList.remove("on");break;
+    case "sample":sample(ev);if(ev.status==="changed")add("alert",`<span class="who">changed</span>${esc((ev.facts||[]).join("; "))} <span class="small">(two of the last three checks start the alarm)</span>`);
+      if(ev.status==="waiting for the instrument"){if(!window.waitNote){window.waitNote=true;add("alert",`<span class="who">no instrument</span>${esc((ev.errors||[]).join("; "))} <span class="small">(the model is not called; plug the device in, the watch goes on by itself)</span>`)}}else window.waitNote=false;break;
+    case "note":add("",`<span class="small">${esc(ev.text)}</span>`);break;
+    case "room_alert":add("alert",`<span class="who">ROOM ALERT</span><b>${esc(ev.text)}</b>${(ev.notified&&ev.notified.length)?`<div class="small">sent: ${esc(ev.notified.join("; "))}</div>`:""}${crops(ev.evidence)}`);
+      if(ev.evidence&&ev.evidence.length){$("#pic").src=`/api/crop?path=${encodeURIComponent(ev.evidence[0])}&t=${Date.now()}`;$("#picCard").style.display="block"}
+      document.title="ROOM ALERT - Hardware-in-the-loop lab";break;
+    case "anomaly":add("alert",`<span class="who">alert</span><b>The watchdog calls the agent:</b> ${esc((ev.facts||[]).join("; "))}`);break;
+    case "run_start":add("",`<span class="who">${esc(ev.source==="alert"?"investigation":"request")}</span>${esc(ev.request)}`);break;
+    case "turn":{
+      const t=ev.role==="orchestrator"&&ev.next?` &rarr; <b>${esc(ev.next)}</b>`:"";
+      add("",`<span class="who">${esc(ev.role)}</span>${t}<div>${esc(ev.text)}</div>`);break;}
+    case "tool_call":add("tool",`<span class="who">command</span><code>${esc(ev.tool)}(${esc(Object.entries(ev.args||{}).map(([k,v])=>k+"="+v).join(", "))})</code>${ev.why?`<div class="why">why: ${esc(ev.why)}</div>`:""}`);break;
+    case "tool_result":{
+      add("res",`<span class="who">${ev.ok?"measured":"rejected"}</span>${esc(ev.summary)}${crops(ev.crops)}`);
+      if(ev.crops&&ev.crops.length){$("#pic").src=`/api/crop?path=${encodeURIComponent(ev.crops[0])}&t=${Date.now()}`;$("#picCard").style.display="block"}break;}
+    case "pause":add("pause",`<span class="who">${esc(ev.payload.kind)}</span><b>${esc(ev.payload.question)}</b>`);pauseBar(ev.payload);break;
+    case "reply":add("",`<span class="who">human</span>${esc(ev.text)}`);$("#pausebar").classList.remove("on");break;
+    case "final":add("final",`<span class="who">final</span>decisions ${ev.decisions}, instrument calls ${ev.calls}, model requests ${ev.model_requests} (folder ${esc(ev.folder)})<pre>${esc(ev.report)}</pre>`);break;
+    case "error":add("err",`<span class="who" style="background:var(--bad);color:#fff">error</span>${esc(ev.text)}`);break;
+  }
+}
+async function init(){
+  S=await (await fetch("/api/state")).json();setMode(S.mode);
+  const i=S.info||{};
+  $("#info").textContent=[S.model&&("model "+S.model),i.camera,i.loudspeaker&&("loudspeaker "+i.loudspeaker),i.microphone&&("microphone "+i.microphone),S.guard_room&&(S.guard_hours?("GUARD HOURS "+S.guard_hours):"GUARD MODE (the room is watched)"),S.reference_file&&("reference file "+S.reference_file),S.fake&&"SIMULATED INSTRUMENT"].filter(Boolean).join(" | ");
+  const sel=$("#preset");Object.entries(S.presets||{}).forEach(([k,v])=>{const o=document.createElement("option");o.value=k;o.textContent=k+". "+v;sel.append(o)});
+  if(S.fake)$("#fakeCard").style.display="block";
+  if(S.guard_room)$("#guardCard").style.display="block";
+  const es=new EventSource("/api/stream?since=0");es.onmessage=m=>handle(JSON.parse(m.data));
+}
+$("#bWatch").onclick=()=>post("/api/watch/start",{interval:+$("#interval").value||4,tone_every:+$("#tone").value||0}).then(r=>{if(!r.ok)alert(r.error)});
+$("#bStop").onclick=()=>post("/api/stop");
+const pause=m=>post("/api/guard/postpone",{minutes:m}).then(r=>{if(!r.ok)alert(r.error)});
+$("#bPause60").onclick=()=>pause(60);$("#bPause240").onclick=()=>pause(240);$("#bResume").onclick=()=>pause(0);
+$("#bAsk").onclick=()=>post("/api/ask",{request:$("#req").value.trim(),use_case:$("#preset").value}).then(r=>{if(r.ok===false)alert(r.error||r.detail)});
+document.querySelectorAll("[data-fake]").forEach(b=>b.onclick=()=>post("/api/fake",JSON.parse(b.dataset.fake)));
+window.addEventListener("resize",()=>KEYS.forEach(draw));
+init();
+</script>
+</body>
+</html>
